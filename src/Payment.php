@@ -67,21 +67,33 @@ class Payment
     }
 
     /**
-     * Creates a withdrawal from your account to a specified address.
-     * @param float $amount The amount of the transaction (floating point to 8 decimals).
-     * @param string $currency The cryptocurrency to withdraw.
-     * @param string $address The address to send the coins to.
-     * @return mixed|string[]
+     * Checks the Plisio API callback for validity.
+     * Use to check incoming invoice status callbacks for validity.
+     * @param array $post
+     * @return bool
      */
-    public function createWithdrawal(float $amount, string $currency, string $address)
+    public function verifyCallbackData(array $post): bool
     {
-        $req = array(
-            'currency' => $currency,
-            'amount' => $amount,
-            'to' => $address,
-            'type' => 'cash_out',
-        );
-        return $this->apiCall('operations/withdraw', $req);
+        if (!isset($post['verify_hash'])) {
+            return false;
+        }
+
+        $verifyHash = $post['verify_hash'];
+        unset($post['verify_hash']);
+        ksort($post);
+        if (isset($post['expire_utc'])){
+            $post['expire_utc'] = (string)$post['expire_utc'];
+        }
+        if (isset($post['tx_urls'])){
+            $post['tx_urls'] = html_entity_decode($post['tx_urls']);
+        }
+        $postString = serialize($post);
+        $checkKey = hash_hmac('sha1', $postString, $this->secretKey);
+        if ($checkKey != $verifyHash) {
+            return false;
+        }
+
+        return true;
     }
 
     private function isSetup(): bool

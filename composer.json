@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Plisio\\PlisioSdkLaravel\\PlisioProvider"
+                "Plisio\\PlisioSdkLaravel\\Providers\\PlisioProvider"
             ]
         }
     }
