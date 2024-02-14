@@ -67,6 +67,97 @@ class Payment
     }
 
     /**
+     * Get a transaction detail
+     * Existing parameters: https://plisio.net/documentation/endpoints/transaction-details
+     * @param string $id
+     * @return string
+     */
+    public function invoiceDetailsSwitch(string $id, array $req)
+    {
+        return $this->apiCall("invoices/switch/$id", $req);
+    }
+
+    /**
+     * Get a transaction detail
+     * Existing parameters: https://plisio.net/documentation/endpoints/transaction-details
+     * @param string $id
+     * @return string
+     */
+    public function invoiceDetailsByPayerEmail(string $id, array $req)
+    {
+        return $this->apiCall("invoices/email/$id", $req);
+    }
+
+    /**
+     * List of all user transactions
+     * Existing parameters: https://plisio.net/documentation/endpoints/transactions
+     * @param array $req
+     * @return string
+     */
+    public function transactions(array $req)
+    {
+        return $this->apiCall('operations', $req);
+    }
+
+    /**
+     * Get a transaction detail
+     * Existing parameters: https://plisio.net/documentation/endpoints/transaction-details
+     * @param string $id
+     * @return string
+     */
+    public function transactionDetails(string $id)
+    {
+        return $this->apiCall("operation/$id");
+    }
+
+    /**
+     * Estimate cryptocurrency fee and Plisio commission
+     * Existing parameters: https://plisio.net/documentation/endpoints/plisio-fee
+     * @param string $psysCid
+     * @param array $req
+     * @return string
+     */
+    public function transactionCommissionEstimate(string $psysCid, array $req)
+    {
+        return $this->apiCall("operations/commission/$psysCid", $req);
+    }
+
+    /**
+     * Estimate fee
+     * Existing parameters: https://plisio.net/documentation/endpoints/fee-estimation
+     * @param string $psysCid
+     * @param array $req
+     * @return string
+     */
+    public function transactionFeeEstimate(string $psysCid, array $req)
+    {
+        return $this->apiCall("operations/fee/$psysCid", $req);
+    }
+
+    /**
+     * Get Plisio fee plans
+     * Existing parameters: https://plisio.net/documentation/endpoints/fee-plans
+     * @param string $psysCid
+     * @param array $req
+     * @return string
+     */
+    public function transactionFeePlans(string $psysCid)
+    {
+        return $this->apiCall("operations/fee-plan/$psysCid");
+    }
+
+    /**
+     * Withdrawal / Mass withdrawal
+     * Existing parameters: https://plisio.net/documentation/endpoints/withdrawal-mass-withdrawal
+     * @param array $req
+     * @return string
+     */
+    public function withdraw(array $req)
+    {
+        return $this->apiCall('operations/withdraw', $req);
+    }
+
+    /**
      * Checks the Plisio API callback for validity.
      * Use to check incoming invoice status callbacks for validity.
      * @param array $post
