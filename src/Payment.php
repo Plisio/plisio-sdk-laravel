@@ -5,7 +5,7 @@ namespace Plisio\PlisioSdkLaravel;
 class Payment
 {
     protected $secretKey = '';
-    public $apiEndPoint = 'https://plisio.net/api/v1';
+    public $apiEndPoint = 'https://api.plisio.net/api/v1';
 
     /**
      * Initiate payment object with an api key.
